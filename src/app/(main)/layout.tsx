@@ -16,12 +16,14 @@ export default function MainLayout({
     const hideNavBar = isChatConversation || isPlansPage
 
     return (
-        <div className="fixed inset-0 h-[100dvh] w-full bg-black overflow-hidden">
+        <div className="fixed inset-0 w-full bg-black overflow-hidden flex flex-col" style={{ height: '100dvh' }}>
             <IOSInstallPrompt />
-            <div className={`h-full w-full no-scrollbar ${isDiscoverPage ? 'overflow-hidden' : 'overflow-y-auto'}`}>
-                {children}
+            <div className={`flex-1 w-full no-scrollbar relative ${isDiscoverPage ? 'overflow-hidden' : 'overflow-y-auto overflow-x-hidden'}`}>
+                <div className="h-full w-full">
+                    {children}
+                </div>
                 {/* Spacer to allow scrolling past the fixed NavBar */}
-                {!isDiscoverPage && !hideNavBar && <div className="h-32 pointer-events-none" />}
+                {!isDiscoverPage && !hideNavBar && <div className="h-32 pointer-events-none w-full" />}
             </div>
             {!hideNavBar && <NavBar />}
         </div>
