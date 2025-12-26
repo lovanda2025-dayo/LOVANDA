@@ -246,7 +246,7 @@ function OnboardingContent() {
                 {step === 5 && renderStep5()}
             </div>
             {error && <div className="w-full max-w-sm mb-4 text-red-400 text-sm text-center bg-red-900/20 py-2 px-4 rounded-lg border border-red-900/50">{error}</div>}
-            <div className="w-full max-w-sm flex gap-4 mt-8">
+            <div className="w-full max-w-sm flex gap-4 mt-8 mb-12">
                 {step > 1 && <button onClick={handleBack} className="flex-1 py-4 rounded-full border border-[#333333] text-white font-bold text-lg hover:bg-[#1A1A1A] transition-colors active:scale-95">Voltar</button>}
                 <button onClick={step === 5 ? handleSubmit : handleNext} disabled={loading || !isStepValid()} className={`flex-1 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed ${isStepValid() ? 'bg-gradient-to-r from-[#ff0800] to-[#ff9900] text-white' : 'bg-[#1A1A1A] text-gray-500 border border-[#333333]'}`}>
                     {loading ? 'Salvando...' : step === 5 ? 'Concluir' : 'Avançar'}

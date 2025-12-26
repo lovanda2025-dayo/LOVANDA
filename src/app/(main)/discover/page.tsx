@@ -418,7 +418,7 @@ export default function DiscoverPage() {
                     </div>
                 </div>
             ) : (
-                <div className="relative h-full w-full overflow-hidden">
+                <div className="relative flex-1 w-full overflow-hidden">
                     {/* STACK IMPLEMENTATION */}
 
 
@@ -456,7 +456,7 @@ export default function DiscoverPage() {
                     </AnimatePresence>
 
                     {/* Bottom Actions Bar */}
-                    <div className="absolute bottom-10 left-0 right-0 px-6 z-30 flex items-center justify-between max-w-lg mx-auto w-full mb-2">
+                    <div className="absolute bottom-24 left-0 right-0 px-6 z-30 flex items-center justify-between max-w-lg mx-auto w-full mb-4">
                         <button
                             onClick={() => setShowFilters(true)}
                             className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-2xl border border-white/20 flex items-center justify-center text-white transition-all hover:bg-white/20 active:scale-90"
