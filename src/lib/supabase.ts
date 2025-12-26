@@ -13,4 +13,11 @@ if (!supabaseUrl || !supabaseAnonKey) {
  * Instância cliente do Supabase para uso em todo o projeto.
  * Garante acesso ao banco de dados, autenticação e storage.
  */
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+  }
+})

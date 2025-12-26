@@ -77,7 +77,17 @@ export default function DiscoverPage() {
 
     useEffect(() => {
         const checkUser = async () => {
-            const { data: { user } } = await supabase.auth.getUser()
+            // 1. Try local session first (Fast/Offline)
+            const { data: { session } } = await supabase.auth.getSession()
+
+            let user = session?.user || null
+
+            if (!user) {
+                // 2. If no local session, try server verification
+                const { data: { user: serverUser } } = await supabase.auth.getUser()
+                user = serverUser
+            }
+
             if (!user) {
                 router.push('/login')
                 return
@@ -308,17 +318,11 @@ export default function DiscoverPage() {
         next('like')
 
         try {
-            await Promise.all([
-                supabase.from('pre_match_messages').insert({
-                    from_user_id: userId,
-                    to_user_id: profileId,
-                    content: preMessageText.trim()
-                }),
-                supabase.from('likes').insert({
-                    from_user_id: userId,
-                    to_user_id: profileId
-                })
-            ])
+            await supabase.from('pre_match_messages').insert({
+                from_user_id: userId,
+                to_user_id: profileId,
+                content: preMessageText.trim()
+            })
         } catch (err) {
             console.error('Error sending pre-match message:', err)
             // Optional: revert logic if needed, but for now simple log.
@@ -343,11 +347,16 @@ export default function DiscoverPage() {
 
         setSending(true)
         try {
-            await supabase.from('anonymous_comments').insert({
-                to_user_id: currentProfile.id,
-                from_user_id: userId, // Internal only
-                content: anonCommentText.trim()
-            })
+            // Send comment AND Like the user to facilitate future matching
+            await Promise.all([
+                supabase.from('anonymous_comments').insert({
+                    to_user_id: currentProfile.id,
+                    from_user_id: userId, // Internal only
+                    content: anonCommentText.trim()
+                }),
+                supabase.rpc('like_user', { target_user_id: currentProfile.id })
+            ])
+
             setShowAnonComment(false)
             setAnonCommentText('')
         } finally {

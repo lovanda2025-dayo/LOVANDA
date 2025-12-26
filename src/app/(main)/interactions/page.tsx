@@ -267,13 +267,17 @@ export default function InteractionsPage() {
                     user: selectedProfile
                 })
                 setShowMatchModal(true)
+            } else {
+                // If not a match, give feedback that the like was sent
+                alert('Curtida enviada com sucesso! Se esta pessoa te curtir também, será um Match.')
+                setShowInfo(false)
             }
 
             // Refetch data to update likes list
             if (userId) loadAllData(userId)
-            setShowInfo(false)
         } catch (err) {
             console.error('Erro ao curtir usuario:', err)
+            alert('Erro ao processar curtida. Tente novamente.')
         }
     }
 

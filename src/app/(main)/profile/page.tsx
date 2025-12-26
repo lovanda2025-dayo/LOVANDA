@@ -48,10 +48,30 @@ export default function ProfilePage() {
         window.open(whatsappUrl, '_blank')
     }
 
+    const handleBuyBatidas = () => {
+        const name = profile?.first_name || 'Utilizador'
+        const message = encodeURIComponent(`Olá! Sou o ${name}, gostaria de comprar mais batidas no Lovanda.`)
+        const whatsappUrl = `https://wa.me/244938495958?text=${message}`
+        window.open(whatsappUrl, '_blank')
+    }
+
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const { data: { user } } = await supabase.auth.getUser()
+                // Tenta obter a sessão primeiro (cache local) para melhor experiência UX/PWA
+                const { data: { session } } = await supabase.auth.getSession()
+
+                if (!session?.user) {
+                    // Fallback para verificação no servidor se necessário (opcional, mas getSession é suficiente para check rápido)
+                    const { data: { user } } = await supabase.auth.getUser()
+                    if (!user) {
+                        router.push('/login')
+                        return
+                    }
+                }
+
+                const user = session?.user || (await supabase.auth.getUser()).data.user
+
                 if (!user) {
                     router.push('/login')
                     return
@@ -211,6 +231,7 @@ export default function ProfilePage() {
                     </div>
 
                     <button
+                        onClick={handleBuyBatidas}
                         className="w-full py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-white/10 hover:border-[#ff9900]/30 transition-all active:scale-95"
                     >
                         Comprar Batidas
