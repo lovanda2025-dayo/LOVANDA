@@ -4,17 +4,28 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { supabase } from '@/lib/supabase'
 
 export default function SplashPage() {
     const router = useRouter()
 
     useEffect(() => {
-        // Redireciona para a landing page após 3 segundos
-        const timer = setTimeout(() => {
-            router.push('/landing')
-        }, 3000)
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession()
 
-        return () => clearTimeout(timer)
+            if (session) {
+                // Se já estiver logado, vai direto para o discover
+                router.push('/discover')
+            } else {
+                // Se não, aguarda 3 segundos e vai para a landing page
+                const timer = setTimeout(() => {
+                    router.push('/landing')
+                }, 3000)
+                return () => clearTimeout(timer)
+            }
+        }
+
+        checkSession()
     }, [router])
 
     return (

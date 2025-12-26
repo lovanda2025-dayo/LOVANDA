@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
@@ -24,6 +24,14 @@ export default function RegisterPage() {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<string | null>(null)
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession()
+            if (session) router.push('/discover')
+        }
+        checkSession()
+    }, [router])
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -96,7 +104,7 @@ export default function RegisterPage() {
     )
 
     return (
-        <div className="fixed inset-0 h-[100dvh] w-full bg-black flex flex-col items-center justify-center p-6 overflow-hidden touch-none">
+        <div className="min-h-[100dvh] w-full bg-black flex flex-col items-center justify-center p-6 overflow-y-auto no-scrollbar">
             <div className="w-full max-w-sm z-10 space-y-8">
                 {/* Header */}
                 <div className="text-center space-y-2">

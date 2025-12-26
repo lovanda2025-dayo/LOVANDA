@@ -12,15 +12,14 @@ export default function MainLayout({
     const pathname = usePathname()
     const isChatConversation = pathname?.startsWith('/chat/') && pathname !== '/chat'
     const isPlansPage = pathname === '/plans'
+    const isDiscoverPage = pathname === '/discover' || pathname === '/'
     const hideNavBar = isChatConversation || isPlansPage
 
     return (
         <div className="fixed inset-0 h-[100dvh] w-full bg-black overflow-hidden flex flex-col">
             <IOSInstallPrompt />
-            <div className="flex-1 w-full overflow-y-auto no-scrollbar">
+            <div className={`flex-1 w-full no-scrollbar ${isDiscoverPage ? 'overflow-hidden' : 'overflow-y-auto'}`}>
                 {children}
-                {/* Spacer for NavBar - hidden when necessary */}
-                {!hideNavBar && <div className="h-24 pointer-events-none" />}
             </div>
             {!hideNavBar && <NavBar />}
         </div>

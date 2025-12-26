@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { Yeseva_One } from 'next/font/google'
 import { motion } from 'framer-motion'
 import { Heart, Ghost } from 'lucide-react'
+import { supabase } from '@/lib/supabase'
+import { useEffect } from 'react'
 
 const yesevaOne = Yeseva_One({
     weight: '400',
@@ -15,8 +17,18 @@ const yesevaOne = Yeseva_One({
 export default function LandingPage() {
     const router = useRouter()
 
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession()
+            if (session) {
+                router.push('/discover')
+            }
+        }
+        checkSession()
+    }, [router])
+
     return (
-        <div className="min-h-[100dvh] w-full bg-black text-white flex flex-col items-center justify-between p-6 py-12 relative overflow-hidden">
+        <div className="h-[100dvh] w-full bg-black text-white flex flex-col items-center justify-between p-6 py-10 relative overflow-hidden touch-none">
             {/* Background Effects */}
             <div className="absolute top-[-10%] right-[-10%] w-[70%] h-[40%] bg-[#ff0800]/20 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-[-10%] left-[-10%] w-[70%] h-[40%] bg-[#ff9900]/10 rounded-full blur-[120px] pointer-events-none" />
