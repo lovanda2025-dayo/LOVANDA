@@ -17,14 +17,6 @@ export const metadata: Metadata = {
   title: "Lovanda",
   description: "O amor que procuras está aqui",
   manifest: "/manifest.json",
-  themeColor: "#ff9900",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-    viewportFit: "cover"
-  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -40,6 +32,17 @@ export const metadata: Metadata = {
     ]
   }
 };
+
+export function generateViewport() {
+  return {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: "cover",
+    themeColor: "#ff9900"
+  }
+}
 
 export default function RootLayout({
   children,
