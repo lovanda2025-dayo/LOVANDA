@@ -132,6 +132,28 @@ export default function ProfileCard({ profile, isFront, style, variants, initial
 
                 {/* Overlay Gradients */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+
+                {/* Swipe Indicators (LIKE / NOPE) */}
+                {/* Note: We use the internal 'x' motion value */}
+                <TimeStamp x={x} type="like" />
+                <TimeStamp x={x} type="nope" />
+
+                {/* Profile Info Overlay - Adjusted to sit above the elevated action buttons */}
+                <div className="absolute bottom-52 left-0 right-0 px-8 pointer-events-none z-10">
+                    <div className="flex items-end justify-between gap-4 mb-2">
+                        <div className="flex-1">
+                            <h1 className={`${yesevaOne.className} text-[38px] text-white leading-[1.1] mb-2 font-bold drop-shadow-lg`}>
+                                {profile.first_name} {profile.last_name}
+                            </h1>
+                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
+                                <span className="text-white text-[13px] font-bold tracking-wide shadow-black">{profile.relationship_goal || 'Relacionamento Sério'}</span>
+                            </div>
+                        </div>
+                        <div className={`${yesevaOne.className} text-white text-[42px] font-bold leading-none mb-4 drop-shadow-lg`}>
+                            {profile.age}
+                        </div>
+                    </div>
+                </div>
             </motion.div>
 
             <AnimatePresence>
