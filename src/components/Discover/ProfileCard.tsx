@@ -14,19 +14,34 @@ const yesevaOne = Yeseva_One({
 interface ProfileCardProps {
     profile: Profile
     isFront: boolean
-    dragHandlers?: {
-        onDragEnd: (e: any, info: PanInfo) => void
-    }
-    dragX?: MotionValue<number>
+    onSwipe?: (direction: 'left' | 'right') => void
     style?: any
     variants?: any
     initial?: any
     animate?: any
+    exit?: any
 }
 
-export default function ProfileCard({ profile, isFront, dragHandlers, dragX, style, variants, initial, animate }: ProfileCardProps) {
+export default function ProfileCard({ profile, isFront, style, variants, initial, animate, exit, onSwipe }: ProfileCardProps) {
     const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
     const [showGallery, setShowGallery] = useState(false)
+
+    // Internal Motion Values for isolated state
+    const x = useMotionValue(0)
+    const rotate = useTransform(x, [-200, 200], [-25, 25])
+
+    // Internal Drag Handler
+    const handleDragEnd = (e: any, info: PanInfo) => {
+        const swipe = info.offset.x
+        const velocity = info.velocity.x
+
+        if (swipe > 100 || (swipe > 50 && velocity > 500)) {
+            onSwipe?.('right')
+        } else if (swipe < -100 || (swipe < -50 && velocity < -500)) {
+            onSwipe?.('left')
+        }
+
+    }
 
     // Reset photo index when profile changes (handled by key prop in parent usually, but safety check)
     useEffect(() => {
@@ -64,15 +79,15 @@ export default function ProfileCard({ profile, isFront, dragHandlers, dragX, sty
     return (
         <>
             <motion.div
-                style={style}
+                style={{ ...style, x, rotate }}
                 variants={variants}
                 initial={initial}
                 animate={animate || "animate"}
-                exit="exit"
+                exit={exit || "exit"}
                 drag={isFront ? "x" : false}
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.5}
-                onDragEnd={dragHandlers?.onDragEnd}
+                onDragEnd={handleDragEnd}
                 whileDrag={isFront ? { cursor: 'grabbing' } : undefined}
                 onClick={handlePhotoNavigation}
                 className={`absolute inset-0 w-full h-full overflow-hidden bg-[#1a1a1a] shadow-2xl ${isFront ? 'cursor-grab active:cursor-grabbing z-20' : 'z-0'}`}
@@ -117,31 +132,6 @@ export default function ProfileCard({ profile, isFront, dragHandlers, dragX, sty
 
                 {/* Overlay Gradients */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-
-                {/* Swipe Indicators (LIKE / NOPE) */}
-                {dragX && (
-                    <>
-                        <TimeStamp x={dragX} type="like" />
-                        <TimeStamp x={dragX} type="nope" />
-                    </>
-                )}
-
-                {/* Profile Info Overlay - Adjusted to sit above the elevated action buttons */}
-                <div className="absolute bottom-52 left-0 right-0 px-8 pointer-events-none z-10">
-                    <div className="flex items-end justify-between gap-4 mb-2">
-                        <div className="flex-1">
-                            <h1 className={`${yesevaOne.className} text-[38px] text-white leading-[1.1] mb-2 font-bold drop-shadow-lg`}>
-                                {profile.first_name} {profile.last_name}
-                            </h1>
-                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
-                                <span className="text-white text-[13px] font-bold tracking-wide shadow-black">{profile.relationship_goal || 'Relacionamento Sério'}</span>
-                            </div>
-                        </div>
-                        <div className={`${yesevaOne.className} text-white text-[42px] font-bold leading-none mb-4 drop-shadow-lg`}>
-                            {profile.age}
-                        </div>
-                    </div>
-                </div>
             </motion.div>
 
             <AnimatePresence>

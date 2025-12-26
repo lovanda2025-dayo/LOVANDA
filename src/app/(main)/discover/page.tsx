@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Yeseva_One } from 'next/font/google'
-import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Bookmark, Send, Info, MessageSquare, SlidersHorizontal, Check, X, Briefcase, Heart, Sparkles, Languages, Church, Scale, Globe, Wallet, Baby, Home, Users, TrendingUp, Plane, Building2, User, Activity, Wine, Cigarette, Coffee, Bone, Trophy, Music, Gamepad2, Palette, Lock } from 'lucide-react'
 import { supabase } from '../../../lib/supabase'
 import { useProfileNavigator, Profile } from '@/hooks/useProfileNavigator'
@@ -65,11 +65,7 @@ export default function DiscoverPage() {
         }
     }, [currentProfile?.id, navigator.queue.length, userId])
 
-    // Motion values for swipe
-    const x = useMotionValue(0)
-    const rotate = useTransform(x, [-200, 200], [-25, 25])
-
-    // Unused transforms removed (handled in component)
+    // Motion values removed (handled internally in ProfileCard now)
 
     const [showMatchModal, setShowMatchModal] = useState(false)
     const [matchDetails, setMatchDetails] = useState<{ match_id: string; profile: Profile } | null>(null)
@@ -224,8 +220,17 @@ export default function DiscoverPage() {
         })
     }
 
+    // Swipe Interaction
+    const isSwiping = useRef(false)
+
+    // Reset swiping flag when profile changes
+    useEffect(() => {
+        isSwiping.current = false
+    }, [currentProfile?.id])
+
     const handleSwipe = (direction: 'left' | 'right') => {
-        if (!currentProfile || !userId) return
+        if (!currentProfile || !userId || isSwiping.current) return
+        isSwiping.current = true
 
         const profileId = currentProfile.id
         const profileSnapshot = { ...currentProfile }
@@ -233,6 +238,10 @@ export default function DiscoverPage() {
         // OPTIMISTIC UPDATES: Update UI and History immediately in memory
         setExitDir(direction)
         const action = direction === 'right' ? 'like' : 'dislike'
+
+        // Small delay to allow exit animation start before state change? 
+        // With AnimatePresence, state change SHOULD trigger exit.
+        // We call next() immediately.
         next(action)
 
         // Background DB Operations
@@ -256,17 +265,6 @@ export default function DiscoverPage() {
             }
         }
         dbOp()
-    }
-
-    const onDragEnd = (_: any, info: any) => {
-        const swipe = info.offset.x
-        const velocity = info.velocity.x
-
-        if (swipe > 100 || (swipe > 50 && velocity > 500)) {
-            handleSwipe('right')
-        } else if (swipe < -100 || (swipe < -50 && velocity < -500)) {
-            handleSwipe('left')
-        }
     }
 
     const handleArchive = async () => {
@@ -448,9 +446,8 @@ export default function DiscoverPage() {
                             key={currentProfile.id}
                             profile={currentProfile}
                             isFront={true}
-                            dragHandlers={{ onDragEnd: onDragEnd }}
-                            dragX={x}
-                            style={{ x, rotate, zIndex: 20 }}
+                            onSwipe={handleSwipe}
+                            style={{ zIndex: 20 }}
                             variants={swipeVariants}
                             initial={false}
                         />
