@@ -358,7 +358,7 @@ export default function InteractionsPage() {
     }
 
     return (
-        <div className="min-h-screen w-full bg-black flex flex-col relative">
+        <div className="min-h-[100dvh] w-full bg-black flex flex-col relative">
             {/* Header */}
             <header className="pt-12 pb-6 px-6 relative z-10 flex items-center justify-center bg-black">
                 <h1 className={`${yesevaOne.className} text-3xl text-white tracking-tight`}>
@@ -394,7 +394,7 @@ export default function InteractionsPage() {
             </div>
 
             {/* Content Section */}
-            <div className="px-6 pb-24 relative z-10">
+            <div className="px-6 pb-[calc(6rem+env(safe-area-inset-bottom))] relative z-10">
                 <AnimatePresence mode="wait">
                     {loading ? (
                         <motion.div
@@ -589,7 +589,7 @@ export default function InteractionsPage() {
                             animate={{ y: 0 }}
                             exit={{ y: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed bottom-0 left-0 right-0 h-[85vh] bg-[#0A0A0A] rounded-t-[40px] z-[110] overflow-hidden border-t border-white/10 shadow-2xl flex flex-col"
+                            className="fixed bottom-0 left-0 right-0 h-[85dvh] bg-[#0A0A0A] rounded-t-[40px] z-[110] overflow-hidden border-t border-white/10 shadow-2xl flex flex-col"
                         >
                             <div className="absolute top-6 right-6 z-20">
                                 <button
@@ -615,7 +615,7 @@ export default function InteractionsPage() {
                                     </div>
                                 </div>
 
-                                <div className="space-y-6 pb-20">
+                                <div className="space-y-6 pb-[calc(5rem+env(safe-area-inset-bottom))]">
                                     {/* Bio */}
                                     {selectedProfile.bio && (
                                         <div className="p-6 rounded-3xl bg-white/5 border border-white/5">
