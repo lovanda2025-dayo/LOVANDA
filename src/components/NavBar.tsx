@@ -11,7 +11,7 @@ export default function NavBar() {
     const isActive = (path: string) => pathname === path
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 px-6 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] bg-black/20 backdrop-blur-[32px] border-t border-white/10 z-50">
+        <nav className="fixed bottom-0 left-0 right-0 px-6 pt-4 pb-[calc(env(safe-area-inset-bottom,20px)+1rem)] bg-black/20 backdrop-blur-[32px] border-t border-white/10 z-50">
             <div className="max-w-md mx-auto">
                 <div className="flex items-center justify-between px-2">
 

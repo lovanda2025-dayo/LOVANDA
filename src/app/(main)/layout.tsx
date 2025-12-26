@@ -16,7 +16,7 @@ export default function MainLayout({
     const hideNavBar = isChatConversation || isPlansPage
 
     return (
-        <div className="fixed inset-0 h-[100dvh] w-full bg-black overflow-hidden">
+        <div className="fixed inset-0 h-[100dvh] w-full bg-black overflow-hidden flex flex-col">
             <IOSInstallPrompt />
             <div className={`h-full w-full no-scrollbar ${isDiscoverPage ? 'overflow-hidden' : 'overflow-y-auto'}`}>
                 {children}

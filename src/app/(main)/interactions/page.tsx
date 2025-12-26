@@ -358,7 +358,7 @@ export default function InteractionsPage() {
     }
 
     return (
-        <div className="min-h-[100dvh] w-full bg-black flex flex-col relative">
+        <div className="h-full w-full bg-black flex flex-col relative">
             {/* Header */}
             <header className="pt-12 pb-6 px-6 relative z-10 flex items-center justify-center bg-black">
                 <h1 className={`${yesevaOne.className} text-3xl text-white tracking-tight`}>
@@ -394,7 +394,7 @@ export default function InteractionsPage() {
             </div>
 
             {/* Content Section */}
-            <div className="px-6 pb-[calc(6rem+env(safe-area-inset-bottom))] relative z-10">
+            <div className="px-6 pb-[calc(7rem+env(safe-area-inset-bottom,20px))] relative z-10">
                 <AnimatePresence mode="wait">
                     {loading ? (
                         <motion.div

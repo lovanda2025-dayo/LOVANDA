@@ -377,7 +377,7 @@ export default function DiscoverPage() {
     }
 
     return (
-        <div className="relative h-[100dvh] w-full bg-black overflow-hidden flex flex-col">
+        <div className="relative h-full w-full bg-black overflow-hidden flex flex-col">
             {loading ? (
                 <div className="flex-1 flex items-center justify-center">
                     <div className="text-white text-xl animate-pulse">A procurar corações...</div>
@@ -456,7 +456,7 @@ export default function DiscoverPage() {
                     </AnimatePresence>
 
                     {/* Bottom Actions Bar - Floating above the Glass NavBar */}
-                    <div className="absolute bottom-[calc(7rem+env(safe-area-inset-bottom))] left-0 right-0 px-6 z-30 flex items-center justify-between max-w-lg mx-auto w-full">
+                    <div className="absolute bottom-[calc(8rem+env(safe-area-inset-bottom,16px))] left-0 right-0 px-6 z-30 flex items-center justify-between max-w-lg mx-auto w-full">
                         <button
                             onClick={() => setShowFilters(true)}
                             className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-2xl border border-white/20 flex items-center justify-center text-white transition-all hover:bg-white/20 active:scale-90"
@@ -509,7 +509,7 @@ export default function DiscoverPage() {
                         <motion.div key="info-modal"
                             initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed bottom-0 left-0 right-0 h-[85dvh] bg-[#0A0A0A] rounded-t-[40px] z-[70] p-8 pb-[calc(6rem+env(safe-area-inset-bottom))] overflow-y-auto no-scrollbar border-t border-white/10 shadow-2xl"
+                            className="fixed bottom-0 left-0 right-0 h-[85dvh] bg-[#0A0A0A] rounded-t-[40px] z-[70] p-8 pb-[calc(7rem+env(safe-area-inset-bottom,20px))] overflow-y-auto no-scrollbar border-t border-white/10 shadow-2xl"
                         >
                             <div className="w-12 h-1.5 bg-white/10 rounded-full mx-auto mb-8" />
 
@@ -791,7 +791,7 @@ export default function DiscoverPage() {
                         <motion.div key="prematch-modal"
                             initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed bottom-0 left-0 right-0 bg-[#1A1A1A] rounded-t-[40px] z-[70] p-8 pb-[calc(6rem+env(safe-area-inset-bottom))] border-t border-white/10"
+                            className="fixed bottom-0 left-0 right-0 bg-[#1A1A1A] rounded-t-[40px] z-[70] p-8 pb-[calc(7rem+env(safe-area-inset-bottom,20px))] border-t border-white/10"
                         >
                             <div className="w-12 h-1.5 bg-white/10 rounded-full mx-auto mb-8" />
                             <h2 className={`${yesevaOne.className} text-2xl text-white mb-2 text-center`}>Mensagem Direta</h2>
@@ -826,7 +826,7 @@ export default function DiscoverPage() {
                         <motion.div key="anon-modal"
                             initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed bottom-0 left-0 right-0 bg-[#1A1A1A] rounded-t-[40px] z-[70] p-8 pb-[calc(6rem+env(safe-area-inset-bottom))] border-t border-white/10"
+                            className="fixed bottom-0 left-0 right-0 bg-[#1A1A1A] rounded-t-[40px] z-[70] p-8 pb-[calc(7rem+env(safe-area-inset-bottom,20px))] border-t border-white/10"
                         >
                             <div className="w-12 h-1.5 bg-white/10 rounded-full mx-auto mb-8" />
                             <h2 className={`${yesevaOne.className} text-2xl text-white mb-2 text-center`}>Comentário Anónimo</h2>
@@ -861,7 +861,7 @@ export default function DiscoverPage() {
                         <motion.div key="filters-modal"
                             initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed bottom-0 left-0 right-0 bg-[#1A1A1A] rounded-t-[40px] z-[70] p-8 pb-[calc(8rem+env(safe-area-inset-bottom))] border-t border-white/10 overflow-y-auto no-scrollbar max-h-[90dvh]"
+                            className="fixed bottom-0 left-0 right-0 bg-[#1A1A1A] rounded-t-[40px] z-[70] p-8 pb-[calc(9rem+env(safe-area-inset-bottom,24px))] border-t border-white/10 overflow-y-auto no-scrollbar max-h-[90dvh]"
                         >
                             <button
                                 onClick={() => setShowFilters(false)}

@@ -114,7 +114,7 @@ export default function ProfilePage() {
     if (!profile) return null
 
     return (
-        <div className="min-h-[100dvh] bg-black text-white pb-[calc(6rem+env(safe-area-inset-bottom))] overflow-y-auto no-scrollbar">
+        <div className="h-full bg-black text-white pb-[calc(7rem+env(safe-area-inset-bottom,20px))] overflow-y-auto no-scrollbar">
             {/* Header */}
             <header className="w-full h-20 px-4 flex items-center justify-center bg-black border-b border-white/5">
                 <h1 className={`${yesevaOne.className} text-[36px]`}>Perfil</h1>
