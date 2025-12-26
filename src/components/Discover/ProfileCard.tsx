@@ -124,8 +124,8 @@ export default function ProfileCard({ profile, isFront, dragHandlers, dragX, sty
                     </>
                 )}
 
-                {/* Profile Info Overlay - Moved higher to clear action buttons */}
-                <div className="absolute bottom-64 left-0 right-0 px-8 pointer-events-none z-10">
+                {/* Profile Info Overlay - Adjusted to sit above the elevated action buttons */}
+                <div className="absolute bottom-52 left-0 right-0 px-8 pointer-events-none z-10">
                     <div className="flex items-end justify-between gap-4 mb-2">
                         <div className="flex-1">
                             <h1 className={`${yesevaOne.className} text-[38px] text-white leading-[1.1] mb-2 font-bold drop-shadow-lg`}>
