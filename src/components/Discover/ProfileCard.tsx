@@ -20,9 +20,11 @@ interface ProfileCardProps {
     dragX?: MotionValue<number>
     style?: any
     variants?: any
+    initial?: any
+    animate?: any
 }
 
-export default function ProfileCard({ profile, isFront, dragHandlers, dragX, style, variants }: ProfileCardProps) {
+export default function ProfileCard({ profile, isFront, dragHandlers, dragX, style, variants, initial, animate }: ProfileCardProps) {
     const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
     const [showGallery, setShowGallery] = useState(false)
 
@@ -64,14 +66,14 @@ export default function ProfileCard({ profile, isFront, dragHandlers, dragX, sty
             <motion.div
                 style={style}
                 variants={variants}
-                initial="initial"
-                animate="animate"
+                initial={initial}
+                animate={animate || "animate"}
                 exit="exit"
                 drag={isFront ? "x" : false}
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.5}
                 onDragEnd={dragHandlers?.onDragEnd}
-                whileDrag={isFront ? { scale: 1.05, cursor: 'grabbing' } : undefined}
+                whileDrag={isFront ? { cursor: 'grabbing' } : undefined}
                 onClick={handlePhotoNavigation}
                 className={`absolute inset-0 w-full h-full overflow-hidden bg-[#1a1a1a] shadow-2xl ${isFront ? 'cursor-grab active:cursor-grabbing z-20' : 'z-0'}`}
             >

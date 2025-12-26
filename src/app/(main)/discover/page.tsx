@@ -452,6 +452,7 @@ export default function DiscoverPage() {
                             dragX={x}
                             style={{ x, rotate, zIndex: 20 }}
                             variants={swipeVariants}
+                            initial={false}
                         />
                     </AnimatePresence>
 
